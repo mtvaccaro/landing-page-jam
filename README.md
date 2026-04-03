@@ -1,89 +1,117 @@
 # Landing Page Jam
 
-A minimal collaborative design exercise for working with shared styles in git.
+A collaboration exercise for designers working together in code. Two people build different sections of a landing page on separate branches, then merge them together.
+
+Takes ~20 minutes. Works best with Claude Code.
+
+---
+
+## What's In Here
+
+Three files on `main`:
+
+- **`index.html`** — Skeleton page for "Beacon Analytics" with two empty sections (`#hero` and `#pricing`)
+- **`styles.css`** — Shared design tokens as CSS variables (colors, spacing, typography, border radius)
+- **`README.md`** — This file
+
+Open `index.html` in a browser. You'll see a styled skeleton: header, footer, and two empty sections in between.
+
+---
 
 ## The Exercise
 
-This is a skeleton landing page for "Beacon Analytics" with shared design tokens but empty sections. Two people will each build one section on separate branches, then merge them together to see how shared styles create cohesion.
+### Phase 1: Build in Parallel
 
-### How it works
+Two people, two terminals.
 
-1. **Both people start on `main`**  
-   Open `index.html` in a browser — you'll see a header, footer, and two empty sections in between.
+**Person A:**
+```bash
+git checkout -b feature/hero
+```
 
-2. **Split up and branch**
-   - **Person A**: `git checkout -b feature/hero`
-   - **Person B**: `git checkout -b feature/pricing`
+Ask Claude Code:  
+*"Build a hero section with a headline, subtitle, and CTA button using the design tokens in styles.css"*
 
-3. **Build your section with Claude Code**  
-   Each person builds their section using the design tokens already defined in `styles.css`.
+**Person B:**
+```bash
+git checkout -b feature/pricing
+```
 
-   **Example prompts:**
-   - Person A: *"Build a hero section with a big headline, subtitle, and two CTA buttons. Use the design tokens from styles.css"*
-   - Person B: *"Create a 3-tier pricing table (free, pro, enterprise) using the shared variables from styles.css"*
+Ask Claude Code:  
+*"Create a 3-tier pricing table using the shared variables from styles.css"*
 
-4. **Push and open PRs**  
-   Both people push their branches and open pull requests.
+Both push, open PRs, review each other's work, and merge into `main`.
 
-5. **Merge both PRs into main**  
-   Once merged, open the combined page — everything should look cohesive because you're both using the same design system.
-
----
-
-## Bonus Round: The Style Ripple
-
-Here's where it gets interesting.
-
-**Person A** makes a new branch and changes `--color-primary` in `styles.css` from purple (`#7C3AED`) to something else — try a coral (`#F97316`) or teal (`#14B8A6`).
-
-Push it and open a PR. Preview the page.
-
-**What happened?** The color change ripples through:
-- The hero section (Person A's work)
-- The pricing section (Person B's work)
-- The header nav's "Sign In" link
-
-This shows the power of shared design tokens — change it once, it updates everywhere.
-
-**But wait...** Person B notices the new primary color breaks the contrast on their pricing cards, or looks weird on a border. Maybe some elements need their own variable instead of relying on `--color-primary`.
-
-**Person B** can now review the PR and collaborate on a fix:
-- Add a new variable like `--color-border-accent` or `--color-card-border`
-- Update the pricing section to use it
-- Push the changes and discuss
-
-This mirrors real-world design system work: shared tokens are powerful, but require coordination and thoughtful scoping.
+Pull latest `main` and open the page. Both sections should look cohesive — you're using the same design tokens.
 
 ---
 
-## Example Prompts to Try
+### Phase 2: Competing Directions
 
-As you go through the exercise, here are some things to ask Claude Code:
+Both branch off `main` again.
 
-**While building:**
+**Person A:**  
+Change `--color-primary` to coral (`#F97316`), commit, open a PR with a screenshot.
+
+**Person B:**  
+Change `--color-primary` to teal (`#14B8A6`), commit, open a PR with a screenshot.
+
+Look at both PRs side by side. Pick one (say, teal). Merge it.
+
+Now you have a rejected direction sitting in an open PR. What do you do with it?
+
+---
+
+## Questions You'll Encounter
+
+This exercise will surface some tensions between Figma's real-time collaboration and git's async workflow:
+
+**On PR Reviews:**
+- How is leaving a PR comment different from a Figma comment?
+- What's the difference between "Comment," "Approve," and "Request Changes"?
+- When do you block a merge vs. just leave a suggestion?
+
+**On Design System Governance:**
+- Should two people be able to change `--color-primary` independently?
+- Who approves changes to shared tokens?
+- How do you coordinate when you can't see each other's cursors?
+
+**On Preserving Explorations:**
+- In Figma, rejected variants live on an "Explorations" page. Where do they live in git?
+- A branch is just code — you can't see what it looks like without running it.
+- Is a screenshot in a closed PR enough? Or do you need a separate visual archive?
+
+**There are no universal answers.** Different teams will develop different norms. The goal is to recognize these questions early.
+
+---
+
+## Helpful Claude Code Prompts
+
+**Understanding the design system:**
 - *"What CSS variables are available in styles.css?"*
-- *"Add a hover effect to the pricing cards using the design tokens"*
-- *"Make the hero section responsive with a mobile breakpoint"*
+- *"Show me where --color-primary is being used"*
 
 **During code review:**
 - *"What changed in this PR?"*
-- *"Show me where --color-primary is being used"*
+- *"Explain the difference between this branch and main"*
 
-**When merging:**
+**When things break:**
 - *"Help me resolve this merge conflict"*
+- *"Why doesn't this look the same as the other person's section?"*
 
-**During the bonus round:**
-- *"Change the primary color to coral and show me what will be affected"*
-- *"The primary color change broke the pricing card contrast — add a separate border color variable and update my section to use it"*
-- *"Suggest a color palette that would work better than purple for a data analytics product"*
+**Iterating:**
+- *"Make the hero responsive with a mobile breakpoint"*
+- *"Add hover states to the pricing cards using the design tokens"*
 
 ---
 
 ## Tips
 
-- Open `index.html` directly in your browser (just drag it in) — no server needed
-- Check the browser's inspector to see the CSS variables in action
-- Look at the git diff to see exactly what each person changed
-- Try building both sections yourself on different branches to get the full experience
+- Open `index.html` directly in your browser (drag it in) — no server needed
+- Use the browser inspector to see CSS variables in action
+- Look at `git diff` to see exactly what changed
+- Try running the exercise solo (build both sections on different branches) to get the full experience
 
-Have fun!
+---
+
+**Looking to facilitate this as a demo?** See [DEMO_GUIDE.md](DEMO_GUIDE.md) for a detailed walkthrough with timing and discussion prompts.
